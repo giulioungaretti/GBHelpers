@@ -1,0 +1,28 @@
+#! /bin/sh
+#
+# updateGO.sh
+# Copyright (C) 2015 giulio <giulioungaretti@me.com>
+#
+# Distributed under terms of the MIT license.
+#
+#OLD GO $PATH
+# this exports GB_PROJECT_DIR
+export OLDPS1=$PS1
+export OLDGOpath=$GOPATH
+GB_PROJECT_DIR=$(gb env)
+string="$GB_PROJECT_DIR"
+substring="FATAL"
+if test "${string#*$substring}" != "$string"
+then
+        echo "Not in a gb project"
+        return 1    # $substring is not in $string
+else
+        GB_PROJECT_DIR=$(echo $GB_PROJECT_DIR | sed s/\"//g )
+        GB_PROJECT_DIR=$(echo $GB_PROJECT_DIR | sed s/GB_PROJECT_DIR\=//g )
+        export GB_PROJECT_DIR=$GB_PROJECT_DIR
+        export GOPATH=$GOPATH:$GB_PROJECT_DIR:$GB_PROJECT_DIR/vendor
+        PROJECT=$(basename $GB_PROJECT_DIR)
+        export PS1='%F{black}(gb:$PROJECT)'$PS1
+        export src=$GB_PROJECT_DIR"/src/"$PROJECT
+        return 0    # $substring is in $string
+fi

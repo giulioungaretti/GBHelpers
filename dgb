@@ -1,0 +1,9 @@
+#! /bin/sh
+#
+# resetGO.sh
+# Copyright (C) 2015 giulio <giulioungaretti@me.com>
+#
+# Distributed under terms of the MIT license.
+#
+export PS1=$OLDPS1
+export GOPATH=$OLDGOpath
