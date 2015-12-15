@@ -1,12 +1,9 @@
 #! /bin/sh
-#
-# updateGO.sh
+# agb
 # Copyright (C) 2015 giulio <giulioungaretti@me.com>
 #
 # Distributed under terms of the MIT license.
 #
-#OLD GO $PATH
-# this exports GB_PROJECT_DIR
 export OLDPS1=$PS1
 export OLDGOpath=$GOPATH
 GB_PROJECT_DIR=$(gb env)
@@ -19,10 +16,11 @@ then
 else
         GB_PROJECT_DIR=$(echo $GB_PROJECT_DIR | sed s/\"//g )
         GB_PROJECT_DIR=$(echo $GB_PROJECT_DIR | sed s/GB_PROJECT_DIR\=//g )
+        GB_PROJECT_DIR=$(echo $GB_PROJECT_DIR | head -n 1)
         export GB_PROJECT_DIR=$GB_PROJECT_DIR
         export GOPATH=$GOPATH:$GB_PROJECT_DIR:$GB_PROJECT_DIR/vendor
         PROJECT=$(basename $GB_PROJECT_DIR)
-        export PS1='%F{black}(gb:$PROJECT)'$PS1
+        export PS1='%F{white}(gb:$PROJECT)'$PS1
         export src=$GB_PROJECT_DIR"/src/"$PROJECT
         return 0    # $substring is in $string
 fi
